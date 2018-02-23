@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Signed Agreement Generator</title>
+<style>
+  body {
+    line-height: 1.3;
+    padding: 50px;
+  }
+  h1 {
+    margin: 0 0 1em;
+  }
+  .info {
+    border-bottom: 1px solid #000;
+    padding: 0 .2em;
+    font-weight: bold;
+  }
+  .signature-block {
+    margin-bottom: 3em;
+  }
+  .signature {
+    min-height: 25px;
+  }
+  .field-block {
+    display: flex;
+    margin-bottom: 1em;
+  }
+  .field {
+    border-bottom: 1px solid #000;
+  }
+  .form {
+    border: 1px solid #000;
+  }
+  .form td {
+    padding: 2px 6px;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+  .form tr:last-child td {
+    border-bottom: none;
+  }
+  .form td:last-child {
+    border-right: none;
+  }
+  .form label {
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+  }
+  .form td p {
+    font-size: 14px;
+    padding: 2px 0 4px;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+
+
+  <h1>Very Serious Agreement</h1>
+
+  <p>This document was signed by <span class="info"><%= name %></span> on behalf of <span class="info"><%= company %></span>.</p>
+
+  <div class="signature-block">
+  <p class="field signature"><%= name %></p>
+  <p>Role: <%= role %><br>Date: <%= date %></p>
+  </div>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt, dui sagittis malesuada luctus, dui ligula eleifend purus, eget hendrerit magna justo a purus. Curabitur quis pellentesque augue, et porttitor enim. Nunc pellentesque ligula vel eros posuere mattis. Fusce ultricies, mi nec facilisis sagittis, lectus nunc rhoncus enim, quis pulvinar justo metus nec mauris. Fusce laoreet leo nec urna pretium, at tristique lorem suscipit. Ut pulvinar posuere lorem, ut ullamcorper eros interdum nec. Proin blandit placerat nunc, sed convallis arcu gravida nec. Fusce placerat, nulla commodo semper convallis, ex eros porta ex, et dapibus nisl sem vitae lorem.</p>
+
+  <table class="form" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td colspan="3">
+        <label>Company name:</label>
+        <p><%= company %></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3"><label>Name:</label><p><%= name %></p></td>
+    </tr>
+    <tr>
+      <td><label>Role:</label><p><%= role %></p></td>
+      <td><label>E-mail:</label><p><%= email %></p></td>
+      <td><label>Country:</label><p><%= country %></p></td>
+    </tr>
+  </table>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "PactMaker",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node index.js",
+    "nodemon": "nodemon index.js --watch *.* --watch views/*.* --watch public/*.* "
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "html5-to-pdf": "^2.2.9",
+    "postmark": "^1.5.0"
+  }
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/masthead') %>
+
+  <div class="container">
+    <h2>Thanks for signing the agreement</h2>
+
+    <p>We’ve emailed a signed copy of this document to <%= email %>. Please review it and make sure your information is correct.</p>
+
+    <iframe src="<%= filename %>" width="100%" height="500">
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
