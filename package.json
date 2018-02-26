@@ -1,6 +1,9 @@
 {
   "name": "PactMaker",
   "version": "0.0.1",
+  "engines": {
+    "node": "8.8.1"
+  },
   "scripts": {
     "start": "node index.js",
     "nodemon": "nodemon index.js --watch *.* --watch views/*.* --watch public/*.* "
