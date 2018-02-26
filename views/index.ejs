@@ -7,7 +7,6 @@
   <%- include('partials/masthead') %>
 
   <div class="container">
-
     <form action="/sign" method="POST">
       <div class="form-row">
         <div class="form-label">
@@ -29,131 +28,124 @@
       </div>
 
       <div class="form-row">
-      <div class="form-label">
-        <label for="country">What country does your company operate in?</label>
+        <div class="form-label">
+          <label for="role">What’s your role at this company?</label>
+        </div>
+        <div class="form-field">
+          <input type="text"
+                 id="role"
+                 name="role"
+                 class="c-input"
+                 size="40"
+                 maxlength="100"
+                 value="Chief"
+                 placeholder="Chief of cheetos"
+                 oninvalid="this.setCustomValidity('Please enter your name.')"
+                 oninput="setCustomValidity('')"
+                 required>
+        </div>
       </div>
-      <div class="form-field">
-        <select id="country"
-                name="country"
-                class="c-select"
-                oninvalid="this.setCustomValidity('Please select the country your company operates in.')"
-                oninput="setCustomValidity('')"
-                required>
-          <option value="" >Please select a country</option>
-          <option selected>Austria</option>
-          <option>Belgium</option>
-          <option>Bulgaria</option>
-          <option>Croatia</option>
-          <option>Cyprus</option>
-          <option>Czech Republic</option>
-          <option>Denmark</option>
-          <option>Estonia</option>
-          <option>Finland</option>
-          <option>France</option>
-          <option>Germany</option>
-          <option>Greece</option>
-          <option>Hungary</option>
-          <option>Ireland</option>
-          <option>Italy</option>
-          <option>Latvia</option>
-          <option>Luxembourg</option>
-          <option>Malta</option>
-          <option>Netherlands</option>
-          <option>Poland</option>
-          <option>Portugal</option>
-          <option>Romania</option>
-          <option>Slovakia</option>
-          <option>Slovenia</option>
-          <option>Spain</option>
-          <option>Sweden</option>
-          <option>Switzerland</option>
-          <option>United Kingdom</option>
-          <option>United States</option>
-          <option>Other</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-label">
-        <label for="name">What’s your full name?</label>
-      </div>
-      <div class="form-field">
-        <input type="text"
-               id="name"
-               name="name"
-               class="c-input"
-               size="40"
-               maxlength="100"
-               value="joe blow"
-               placeholder="Sarah Scissorman"
-               oninvalid="this.setCustomValidity('Please enter your name.')"
-               oninput="setCustomValidity('')"
-               required>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-label">
-        <label for="role">What’s your role at this company?</label>
-      </div>
-      <div class="form-field">
-        <input type="text"
-               id="role"
-               name="role"
-               class="c-input"
-               size="40"
-               maxlength="100"
-               value="Chief"
-               placeholder="Chief of cheetos"
-               oninvalid="this.setCustomValidity('Please enter your name.')"
-               oninput="setCustomValidity('')"
-               required>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-label">
-        <label for="email">What’s your email address?</label>
-      </div>
-      <div class="form-field">
-        <input type="email"
-               id="email"
-               name="email"
-               class="c-input"
-               size="40"
-               value="support@pigeonbot.com"
-               placeholder="sarah@sawsnscissors.co"
-               oninvalid="this.setCustomValidity('Please enter a valid email address.')"
-               oninput="setCustomValidity('')"
-               required>
-      </div>
-    </div>
 
       <div class="form-row">
-      <div class="form-label">
-        <label>Are you authorized to sign on behalf of this company?</label>
+        <div class="form-label">
+          <label for="country">What country does your company operate in?</label>
+        </div>
+        <div class="form-field">
+          <select id="country"
+                  name="country"
+                  class="c-select"
+                  oninvalid="this.setCustomValidity('Please select the country your company operates in.')"
+                  oninput="setCustomValidity('')"
+                  required>
+            <option value="" >Please select a country</option>
+            <option selected>Austria</option>
+            <option>Belgium</option>
+            <option>Bulgaria</option>
+            <option>Croatia</option>
+            <option>Cyprus</option>
+            <option>Czech Republic</option>
+            <option>Denmark</option>
+            <option>Estonia</option>
+            <option>Finland</option>
+            <option>France</option>
+            <option>Germany</option>
+            <option>Greece</option>
+            <option>Hungary</option>
+            <option>Ireland</option>
+            <option>Italy</option>
+            <option>Latvia</option>
+            <option>Luxembourg</option>
+            <option>Malta</option>
+            <option>Netherlands</option>
+            <option>Poland</option>
+            <option>Portugal</option>
+            <option>Romania</option>
+            <option>Slovakia</option>
+            <option>Slovenia</option>
+            <option>Spain</option>
+            <option>Sweden</option>
+            <option>Switzerland</option>
+            <option>United Kingdom</option>
+            <option>United States</option>
+            <option>Other</option>
+          </select>
+        </div>
       </div>
-      <div class="form-field">
-        <label><input type="radio"
-                      group="authorized"
-                      name="authorized"
-                      value="yes"
-                      required> Yes</label>
-        <br><label><input type="radio"
-                          group="authorized"
-                          name="authorized"
-                          value="no"> No</label>
+
+      <div class="form-row">
+        <div class="form-label">
+          <label for="name">What’s your full name?</label>
+        </div>
+        <div class="form-field">
+          <input type="text"
+                 id="name"
+                 name="name"
+                 class="c-input"
+                 size="40"
+                 maxlength="100"
+                 value="joe blow"
+                 placeholder="Sarah Scissorman"
+                 oninvalid="this.setCustomValidity('Please enter your name.')"
+                 oninput="setCustomValidity('')"
+                 required>
+        </div>
       </div>
-    </div>
+
+      <div class="form-row">
+        <div class="form-label">
+          <label for="email">What’s your email address?</label>
+        </div>
+        <div class="form-field">
+          <input type="email"
+                 id="email"
+                 name="email"
+                 class="c-input"
+                 size="40"
+                 value="support@pigeonbot.com"
+                 placeholder="sarah@sawsnscissors.co"
+                 oninvalid="this.setCustomValidity('Please enter a valid email address.')"
+                 oninput="setCustomValidity('')"
+                 required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-label">
+          <label>Draw your signature</label>
+        </div>
+        <div class="form-field">
+          <button class="js-sig-reset sig-reset hidden"></button>
+          <canvas class="js-sig-canvas sig" width="446" height="125"></canvas>
+          <input type="hidden" class="js-sig" name="signature">
+        </div>
+      </div>
 
       <div class="form-submit">
-        <input type="submit" value="Sign Agreement">
+        <input class="c-submit js-submit" type="submit" value="Sign Agreement" disabled>
       </div>
     </form>
   </div>
 
   <%- include('partials/footer') %>
-
 </body>
 </html>

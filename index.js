@@ -5,8 +5,12 @@ const fs = require('fs')
 const HTMLToPDF = require('html5-to-pdf')
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
+const _ = require('lodash')
 const config = require('./config')
+
 const agreement = fs.readFileSync(`${__dirname}/views/agreement.ejs`, 'utf8')
+const emailContentInternal = ejs.compile(fs.readFileSync(`${__dirname}/emails/internal.ejs`, 'utf8'))
+const emailContentSignee = ejs.compile(fs.readFileSync(`${__dirname}/emails/signee.ejs`, 'utf8'))
 
 const postmark = require('postmark')
 const client = new postmark.Client(config.email.postmarkServerToken)
@@ -15,9 +19,13 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
+const viewData = {
+  title: config.title
+}
+
 // Routes
 app.get('/', (req, res) => {
-  res.render('index')
+  res.render('index', viewData)
 })
 
 app.post('/sign', (req, res) => {
@@ -25,9 +33,9 @@ app.post('/sign', (req, res) => {
   req.body.filename = `/agreements/${req.body.company}_${Date.now()}.pdf`;
   req.body.date = Date.now()
 
-  convert(req.body.filename, template(req.body), () => {
-    res.render('success', req.body)
-    sendEmails(req.body)
+  createDocument(req.body.filename, template(req.body), () => {
+    res.render('success', _.merge(viewData, req.body))
+    // sendEmails(req.body)
   })
 })
 
@@ -36,6 +44,8 @@ app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
 
 function sendEmails(data) {
+  const signeeSubject = ejs.compile(config.email.signee.subject)
+  const internalSubject = ejs.compile(config.email.internal.subject)
   const attachment = {
     'Content': fs.readFileSync(`./public${data.filename}`).toString('base64'),
     'Name': `${data.company}_${data.date}.pdf`,
@@ -46,8 +56,8 @@ function sendEmails(data) {
   client.sendEmail({
     'From': config.email.fromAddress,
     'To': data.email,
-    'Subject': config.email.signee.subject,
-    'TextBody': 'Attached is your signed agreement',
+    'Subject': signeeSubject(data),
+    'HtmlBody': emailContentSignee(data),
     'Attachments': [attachment]
   })
 
@@ -56,15 +66,14 @@ function sendEmails(data) {
     client.sendEmail({
       'From': config.email.fromAddress,
       'To': email,
-      'Subject': config.email.internal.subject,
-      'TextBody': 'Attached is your signed agreement',
+      'Subject': internalSubject(data),
+      'HtmlBody': emailContentInternal(data),
       'Attachments': [attachment]
     })
   })
-
 }
 
-function convert(filename, body, callback) {
+function createDocument(filename, body, callback) {
   const htmlToPDF = new HTMLToPDF({
     inputBody: body,
     outputPath: `./public${filename}`,

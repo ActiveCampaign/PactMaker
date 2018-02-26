@@ -18,14 +18,8 @@
   .signature-block {
     margin-bottom: 3em;
   }
-  .signature {
+  .signature-field {
     min-height: 25px;
-  }
-  .field-block {
-    display: flex;
-    margin-bottom: 1em;
-  }
-  .field {
     border-bottom: 1px solid #000;
   }
   .form {
@@ -55,39 +49,27 @@
 </style>
 </head>
 <body>
-
-
-
-  <h1>Very Serious Agreement</h1>
+  <h1>Agreement</h1>
 
   <p>This document was signed by <span class="info"><%= name %></span> on behalf of <span class="info"><%= company %></span>.</p>
 
   <div class="signature-block">
-  <p class="field signature"><%= name %></p>
-  <p>Role: <%= role %><br>Date: <%= date %></p>
+    <p class="signature-field"><img src="<%= signature %>" height="55"></p>
+    <p>Name: <%= name %><br>Role: <%= role %><br>Date: <%= date %></p>
   </div>
-
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt, dui sagittis malesuada luctus, dui ligula eleifend purus, eget hendrerit magna justo a purus. Curabitur quis pellentesque augue, et porttitor enim. Nunc pellentesque ligula vel eros posuere mattis. Fusce ultricies, mi nec facilisis sagittis, lectus nunc rhoncus enim, quis pulvinar justo metus nec mauris. Fusce laoreet leo nec urna pretium, at tristique lorem suscipit. Ut pulvinar posuere lorem, ut ullamcorper eros interdum nec. Proin blandit placerat nunc, sed convallis arcu gravida nec. Fusce placerat, nulla commodo semper convallis, ex eros porta ex, et dapibus nisl sem vitae lorem.</p>
 
   <table class="form" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-      <td colspan="3">
-        <label>Company name:</label>
-        <p><%= company %></p>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3"><label>Name:</label><p><%= name %></p></td>
-    </tr>
-    <tr>
-      <td><label>Role:</label><p><%= role %></p></td>
-      <td><label>E-mail:</label><p><%= email %></p></td>
+      <td><label>Company name:</label><p><%= company %></p></td>
       <td><label>Country:</label><p><%= country %></p></td>
     </tr>
+    <tr>
+      <td><label>Name:</label><p><%= name %></p></td>
+      <td><label>Role:</label><p><%= role %></p></td>
+    </tr>
+    <tr>
+      <td colspan="2"><label>Signature:</label><p><img src="<%= signature %>" height="55"></p></td>
+    </tr>
   </table>
-
-
-
-
 </body>
 </html>

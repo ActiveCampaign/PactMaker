@@ -2,16 +2,23 @@ body {
   font-family: 'Helvetica';
   background-color: #f0f0f5;
 }
-
 * {
   box-sizing: border-box;
 }
 
+h1 {
+  margin: 3em 0 2em;
+  text-align: center;
+  font-size: 20px;
+  color: #a6adbb;
+}
+h2 {
+  margin: 0 0 .5em;
+}
 p {
   font-size: 16px;
   line-height: 1.4;
 }
-
 footer {
   margin: 1em 0 2em;
   text-align: center;
@@ -26,18 +33,19 @@ footer {
   padding: 50px;
   border: 2px solid rgba(166, 173, 188, 0.35);
 }
+
+/* Form */
 .form-row {
   margin-bottom: 2em;
-}
-
-.form-label {
-  margin-bottom: 1em;
 }
 .form-label {
   font-size: 15px;
   font-weight: bold;
+  margin-bottom: 1em;
 }
-
+.form-field {
+  position: relative;
+}
 .c-select {
   width: 100%;
   font-size: 16px;
@@ -46,7 +54,7 @@ footer {
 .c-input {
   width: 100%;
   font-size: 16px;
-  padding: 18px;
+  padding: 16px;
   border-radius: 4px;
   border: 2px solid #DDD;
 }
@@ -54,8 +62,7 @@ footer {
   outline: none;
   border-color: #8d90ff;
 }
-
-input[type="submit"] {
+.c-submit {
   padding: 20px 35px;
   font-size: 16px;
   background-color: #e0be15;
@@ -65,13 +72,38 @@ input[type="submit"] {
   color: #FFF;
   font-weight: bold;
 }
-
-h1 {
-  margin: 3em 0 2em;
-  text-align: center;
-  font-size: 20px;
-  color: #a6adbb;
+.c-submit:disabled {
+  opacity: .3;
 }
-h2 {
-  margin: 0 0 .5em;
+
+.hidden {
+  display: none;
+}
+
+/* Signature field */
+.sig {
+  border: 2px solid #DDD;
+  border-radius: 4px;
+}
+
+.sig-reset {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  border: none;
+  background-color: rgba(0, 0, 0, .12);
+  height: 26px;
+  width: 26px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.sig-reset:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.sig-reset::before {
+  content: '×';
+  color: #FFF;
+  font-size: 20px;
+  line-height: 1;
+  text-align: center;
 }
