@@ -49,7 +49,7 @@ function sendEmails(data) {
   const signeeSubject = ejs.compile(process.env.SIGNEE_EMAIL_SUBJECT || '')
   const internalSubject = ejs.compile(process.env.INTERNAL_EMAIL_SUBJECT || '')
   const attachment = {
-    'Content': fs.readFileSync(`./public${data.filename}`).toString('base64'),
+    'Content': fs.readFileSync(`${__dirname}/public${data.filename}`).toString('base64'),
     'Name': `${data.company}_${data.date}.pdf`,
     'ContentType': 'application/pdf'
   }
@@ -83,7 +83,7 @@ function sendEmails(data) {
 function createDocument(filename, body, callback) {
   const htmlToPDF = new HTMLToPDF({
     inputBody: body,
-    outputPath: `./public${filename}`,
+    outputPath: `${__dirname}/public${filename}`,
   })
 
   htmlToPDF.build((error) => {
