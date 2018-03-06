@@ -31,9 +31,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/sign', (req, res) => {
+  console.log('Start signing')
   var template = ejs.compile(agreement)
   req.body.filename = `/agreements/${req.body.company}_${Date.now()}.pdf`;
   req.body.date = Date.now()
+
+  console.log(template)
 
   createDocument(req.body.filename, template(req.body), () => {
     res.render('success', _.merge(viewData, req.body))
@@ -81,6 +84,7 @@ function sendEmails(data) {
 }
 
 function createDocument(filename, body, callback) {
+  console.log('Create document')
   const htmlToPDF = new HTMLToPDF({
     inputBody: body,
     outputPath: `${__dirname}/public${filename}`,
@@ -88,6 +92,8 @@ function createDocument(filename, body, callback) {
 
   htmlToPDF.build((error) => {
     if(error) throw error
+
+    console.log('Build...')
 
     callback()
   })
