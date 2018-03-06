@@ -6,22 +6,24 @@ const HTMLToPDF = require('html5-to-pdf')
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const _ = require('lodash')
-const config = require('./config')
 
 const agreement = fs.readFileSync(`${__dirname}/views/agreement.ejs`, 'utf8')
 const emailContentInternal = ejs.compile(fs.readFileSync(`${__dirname}/emails/internal.ejs`, 'utf8'))
 const emailContentSignee = ejs.compile(fs.readFileSync(`${__dirname}/emails/signee.ejs`, 'utf8'))
 
+validateConfig()
+
 const postmark = require('postmark')
-const client = new postmark.Client(config.email.postmarkServerToken)
+const client = new postmark.Client(process.env.POSTMARK_SERVER_TOKEN)
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 const viewData = {
-  title: config.title
+  title: process.env.TITLE || ''
 }
+
 
 // Routes
 app.get('/', (req, res) => {
@@ -35,7 +37,7 @@ app.post('/sign', (req, res) => {
 
   createDocument(req.body.filename, template(req.body), () => {
     res.render('success', _.merge(viewData, req.body))
-    // sendEmails(req.body)
+    sendEmails(req.body)
   })
 })
 
@@ -44,8 +46,8 @@ app.listen(process.env.PORT || 3000, () => console.log('PactMaker is up and runn
 
 
 function sendEmails(data) {
-  const signeeSubject = ejs.compile(config.email.signee.subject)
-  const internalSubject = ejs.compile(config.email.internal.subject)
+  const signeeSubject = ejs.compile(process.env.SIGNEE_EMAIL_SUBJECT || '')
+  const internalSubject = ejs.compile(process.env.INTERNAL_EMAIL_SUBJECT || '')
   const attachment = {
     'Content': fs.readFileSync(`./public${data.filename}`).toString('base64'),
     'Name': `${data.company}_${data.date}.pdf`,
@@ -54,7 +56,7 @@ function sendEmails(data) {
 
   // Send email to customer
   client.sendEmail({
-    'From': config.email.fromAddress,
+    'From': process.env.FROM_ADDRESS,
     'To': data.email,
     'Subject': signeeSubject(data),
     'HtmlBody': emailContentSignee(data),
@@ -62,15 +64,20 @@ function sendEmails(data) {
   })
 
   // Send email notification to internal team
-  config.email.internal.to.forEach((email) => {
-    client.sendEmail({
-      'From': config.email.fromAddress,
-      'To': email,
-      'Subject': internalSubject(data),
-      'HtmlBody': emailContentInternal(data),
-      'Attachments': [attachment]
+  if (process.env.INTERNAL_EMAIL_RECIPIENTS) {
+    const internalRecipients = process.env.INTERNAL_EMAIL_RECIPIENTS.split(',')
+
+    internalRecipients.forEach((email) => {
+      client.sendEmail({
+        'From': process.env.FROM_ADDRESS,
+        'To': email,
+        'Subject': internalSubject(data),
+        'HtmlBody': emailContentInternal(data),
+        'Attachments': [attachment]
+      })
     })
-  })
+  }
+
 }
 
 function createDocument(filename, body, callback) {
@@ -84,4 +91,13 @@ function createDocument(filename, body, callback) {
 
     callback()
   })
+}
+
+function validateConfig() {
+  if (!process.env.FROM_ADDRESS) {
+    throw Error('No From address specified in config')
+  }
+  if (!process.env.POSTMARK_SERVER_TOKEN) {
+    throw Error('No Postmark server token specified in config')
+  }
 }
