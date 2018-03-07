@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,500');
+
 body {
-  font-family: 'Helvetica';
-  background-color: #f0f0f5;
+  font-family: 'Rubik', Helvetica, sans-serif;
+  background-color: #f5f8ff;
 }
 * {
   box-sizing: border-box;
@@ -10,7 +12,8 @@ h1 {
   margin: 3em 0 2em;
   text-align: center;
   font-size: 20px;
-  color: #a6adbb;
+  color: #a6b4d2;
+  font-weight: 500;
 }
 h2 {
   margin: 0 0 .5em;
@@ -39,8 +42,8 @@ footer {
   margin-bottom: 2em;
 }
 .form-label {
-  font-size: 15px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 500;
   margin-bottom: 1em;
 }
 .form-field {
@@ -56,7 +59,7 @@ footer {
   font-size: 16px;
   padding: 16px;
   border-radius: 4px;
-  border: 2px solid #DDD;
+  border: 1px solid #DDD;
 }
 .c-input:focus {
   outline: none;
@@ -65,12 +68,13 @@ footer {
 .c-submit {
   padding: 20px 35px;
   font-size: 16px;
-  background-color: #B59644;
+  background-color: #3bd07d;
   border-radius: 3px;
   border: none;
   cursor: pointer;
   color: #FFF;
   font-weight: bold;
+  width: 100%;
 }
 .c-submit:disabled {
   opacity: .3;
@@ -82,8 +86,9 @@ footer {
 
 /* Signature field */
 .sig {
-  border: 2px solid #DDD;
+  border: 1px solid #DDD;
   border-radius: 4px;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" style="font-size:16px"><text y="16">✏️</text></svg>'), auto;
 }
 
 .sig-reset {
@@ -104,6 +109,6 @@ footer {
   content: '×';
   color: #FFF;
   font-size: 20px;
-  line-height: 1;
+  line-height: .7;
   text-align: center;
 }

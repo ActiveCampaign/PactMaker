@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -73,7 +74,7 @@ function sendEmails(data) {
 
   // Send email to customer
   client.sendEmail({
-    'From': process.env.FROM_ADDRESS,
+    'From': process.env.POSTMARK_FROM_ADDRESS,
     'To': data.email,
     'Subject': signeeSubject(data),
     'HtmlBody': emailContentSignee(data),
@@ -94,7 +95,7 @@ function sendEmails(data) {
 
     internalRecipients.forEach((email) => {
       client.sendEmail({
-        'From': process.env.FROM_ADDRESS,
+        'From': process.env.POSTMARK_FROM_ADDRESS,
         'To': email,
         'Subject': internalSubject(data),
         'HtmlBody': emailContentInternal(data),
@@ -129,7 +130,7 @@ function createDocument(content, callback) {
  * Validate heroku config
  */
 function validateConfig() {
-  if (!process.env.FROM_ADDRESS) {
+  if (!process.env.POSTMARK_FROM_ADDRESS) {
     throw Error('No From address specified in config')
   }
   if (!process.env.POSTMARK_SERVER_TOKEN) {

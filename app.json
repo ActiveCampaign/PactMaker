@@ -4,16 +4,16 @@
   "scripts": {
   },
   "env": {
-    "FROM_ADDRESS": {
-      "description": "The email address to send your emails From in Postmark.",
+    "POSTMARK_SERVER_TOKEN": {
+      "description": "Server tokens can be found under the credentials tab on your Postmark server.",
       "value": ""
     },
-    "POSTMARK_SERVER_TOKEN": {
-      "description": "Server tokens can be found on the credentials tab on your Postmark server.",
+    "POSTMARK_FROM_ADDRESS": {
+      "description": "The email address you want to send the email from. You must verify your domain or create a valid Sender Signature on Postmark.",
       "value": ""
     },
     "INTERNAL_EMAIL_RECIPIENTS": {
-      "description": "Comma separated list of email address to send PDF agreement.",
+      "description": "Comma-separated list of email address you want to send the PDF agreement to.",
       "value": ""
     },
     "INTERNAL_EMAIL_SUBJECT": "<%= company %> just signed the agreement",
