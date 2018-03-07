@@ -3,6 +3,7 @@ const app = express()
 const path = require('path')
 const fs = require('fs')
 const HTMLToPDF = require('html5-to-pdf')
+const pdf = require('html-pdf');
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const _ = require('lodash')
@@ -34,11 +35,11 @@ app.post('/sign', (req, res) => {
   var template = ejs.compile(agreement)
   req.body.date = Date.now()
 
-  createDocument(template(req.body), () => {
+  createDocument(template(req.body), (pdfAgreement) => {
+    req.body.agreement = pdfAgreement
     res.render('success', _.merge(viewData, req.body))
 
-    // req.body.agreement = pdfAgreement
-    // sendEmails(req.body)
+    sendEmails(req.body)
   })
 })
 
@@ -82,18 +83,24 @@ function sendEmails(data) {
 }
 
 function createDocument(body, callback) {
-  const htmlToPDF = new HTMLToPDF({ inputBody: body })
+  pdf.create(body).toBuffer((err, buffer) => {
+    console.log('This is a buffer:', Buffer.isBuffer(buffer))
 
-  callback()
-
-  htmlToPDF.build((error, buffer) => {
-    if(error) throw error
-
-    console.log('PDF Finished...')
-
-    // callback(buffer.toString('base64'))
-    // callback()
+    callback(buffer.toString('base64'))
   })
+
+  // const htmlToPDF = new HTMLToPDF({ inputBody: body })
+  //
+  // callback()
+  //
+  // htmlToPDF.build((error, buffer) => {
+  //   if(error) throw error
+  //
+  //   console.log('PDF Finished...')
+  //
+  //   // callback(buffer.toString('base64'))
+  //   // callback()
+  // })
 }
 
 function validateConfig() {
