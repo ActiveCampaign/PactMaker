@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="200" src="media/logo.svg" alt="PactMaker">
+  <img width="250" src="media/logo.png" alt="PactMaker">
   <br>
   <br>
 </h1>
@@ -41,7 +41,7 @@ The subject line of the email that gets sent to your team. Available variables: 
 The subject line of the email that gets sent to the person who just signed the agreement. Available variables: `<%= company %>`, `<%= name %>`, `<%= role %>`, and `<%= email %>`.
 
 #### `TITLE`
-The name of your company or app that appears on the page header and footer.
+The name of your company or app. This will appear on the page header and footer.
 
 ## Get started
 Before you get started make sure you create an environment variable file.
@@ -49,7 +49,7 @@ Before you get started make sure you create an environment variable file.
 * `npm start` or `heroku local`
 
 ## Email templates
-The email content for the signee and internal email can be found under [`/emails`]((emails)). Templates are rendered using [EJS](http://www.embeddedjs.com/). Available variables: `<%= company %>`, `<%= name %>`, `<%= role %>`, and `<%= email %>`.
+The email content for the signee and internal email can be found under [`/emails`](emails). Templates are rendered using [EJS](http://www.embeddedjs.com/). Available variables: `<%= company %>`, `<%= name %>`, `<%= role %>`, and `<%= email %>`.
 
 ## Agreement template
 The agreement PDF template can be found at [`/views/agreement.ejs`](views/agreement.ejs). PactMaker comes with basic styles for presenting different signatures.
