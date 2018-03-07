@@ -31,14 +31,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/sign', (req, res) => {
-  console.log('Start signing')
   var template = ejs.compile(agreement)
   req.body.filename = `/agreements/${req.body.company}_${Date.now()}.pdf`;
   req.body.date = Date.now()
 
-  console.log(template)
-
-  createDocument(req.body.filename, template(req.body), () => {
+  createDocument(req.body.filename, template(req.body), (pdfAgreement) => {
+    req.body.agreement = pdfAgreement
     res.render('success', _.merge(viewData, req.body))
     sendEmails(req.body)
   })
@@ -52,7 +50,7 @@ function sendEmails(data) {
   const signeeSubject = ejs.compile(process.env.SIGNEE_EMAIL_SUBJECT || '')
   const internalSubject = ejs.compile(process.env.INTERNAL_EMAIL_SUBJECT || '')
   const attachment = {
-    'Content': fs.readFileSync(`${__dirname}/public${data.filename}`).toString('base64'),
+    'Content': data.agreement,
     'Name': `${data.company}_${data.date}.pdf`,
     'ContentType': 'application/pdf'
   }
@@ -84,18 +82,14 @@ function sendEmails(data) {
 }
 
 function createDocument(filename, body, callback) {
-  console.log('Create document')
   const htmlToPDF = new HTMLToPDF({
-    inputBody: body,
-    outputPath: `${__dirname}/public${filename}`,
+    inputBody: body
   })
 
-  htmlToPDF.build((error) => {
+  htmlToPDF.build((error, buffer) => {
     if(error) throw error
 
-    console.log('Build...')
-
-    callback()
+    callback(buffer.toString('base64'))
   })
 }
 
