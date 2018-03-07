@@ -78,6 +78,14 @@ function sendEmails(data) {
     'Subject': signeeSubject(data),
     'HtmlBody': emailContentSignee(data),
     'Attachments': [attachment]
+  }, (err, results) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+
+    console.log('Email sent:')
+    console.log(results)
   })
 
   // Send email notification to internal team
@@ -91,6 +99,14 @@ function sendEmails(data) {
         'Subject': internalSubject(data),
         'HtmlBody': emailContentInternal(data),
         'Attachments': [attachment]
+      }, (err, results) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+
+        console.log('Email sent:')
+        console.log(results)
       })
     })
   }
