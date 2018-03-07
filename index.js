@@ -1,4 +1,5 @@
-if (!~process.env.NODE.indexOf('heroku')) {
+if (!process.env.HEROKU) {
+  console.log('ahoy')
   // Only load dot env if it's not running on heroku
   require('dotenv').config()
 }

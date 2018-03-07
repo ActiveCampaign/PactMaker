@@ -4,6 +4,10 @@
   "scripts": {
   },
   "env": {
+    "TITLE": {
+      "description": "Name of your company or app. This will appear in the header and footer.",
+      "value": "PactMaker"
+    },
     "POSTMARK_SERVER_TOKEN": {
       "description": "Server tokens can be found under the credentials tab on your Postmark server.",
       "value": ""
@@ -18,10 +22,7 @@
     },
     "INTERNAL_EMAIL_SUBJECT": "<%= company %> just signed the agreement",
     "SIGNEE_EMAIL_SUBJECT": "Your signed agreement for <%= company %>",
-    "TITLE": {
-      "description": "Name of your company or app. This will appear in the header and footer.",
-      "value": "PactMaker"
-    }
+    "HEROKU": "true"
   },
   "formation": {
     "web": {
