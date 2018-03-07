@@ -2,15 +2,19 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const fs = require('fs')
-const HTMLToPDF = require('html5-to-pdf')
 const pdf = require('html-pdf');
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const _ = require('lodash')
 
+// Cache agreement template
 const agreement = fs.readFileSync(`${__dirname}/views/agreement.ejs`, 'utf8')
+
+// Cache email subjects and content
 const emailContentInternal = ejs.compile(fs.readFileSync(`${__dirname}/emails/internal.ejs`, 'utf8'))
 const emailContentSignee = ejs.compile(fs.readFileSync(`${__dirname}/emails/signee.ejs`, 'utf8'))
+const signeeSubject = ejs.compile(process.env.SIGNEE_EMAIL_SUBJECT || '')
+const internalSubject = ejs.compile(process.env.INTERNAL_EMAIL_SUBJECT || '')
 
 validateConfig()
 
@@ -26,11 +30,17 @@ const viewData = {
 }
 
 
-// Routes
+/**
+ * Index express route
+ */
 app.get('/', (req, res) => {
   res.render('index', viewData)
 })
 
+
+/**
+ * Sign document express route
+ */
 app.post('/sign', (req, res) => {
   var template = ejs.compile(agreement)
   req.body.date = Date.now()
@@ -43,13 +53,18 @@ app.post('/sign', (req, res) => {
   })
 })
 
-// Start server
+
+/**
+ * Start express server
+ */
 app.listen(process.env.PORT || 3000, () => console.log('PactMaker is up and running!'))
 
 
+/**
+ * Send emails to the signee and internal team
+ * @param  {Object} data Request body data
+ */
 function sendEmails(data) {
-  const signeeSubject = ejs.compile(process.env.SIGNEE_EMAIL_SUBJECT || '')
-  const internalSubject = ejs.compile(process.env.INTERNAL_EMAIL_SUBJECT || '')
   const attachment = {
     'Content': data.agreement,
     'Name': `${data.company}_${data.date}.pdf`,
@@ -79,30 +94,24 @@ function sendEmails(data) {
       })
     })
   }
-
 }
 
-function createDocument(body, callback) {
-  pdf.create(body).toBuffer((err, buffer) => {
-    console.log('This is a buffer:', Buffer.isBuffer(buffer))
 
+/**
+ * Create PDF document
+ * @param  {Object}   content  HTMl content content
+ * @param  {Function} callback Callback containing the encoded PDF buffer
+ */
+function createDocument(content, callback) {
+  pdf.create(content).toBuffer((err, buffer) => {
     callback(buffer.toString('base64'))
   })
-
-  // const htmlToPDF = new HTMLToPDF({ inputBody: body })
-  //
-  // callback()
-  //
-  // htmlToPDF.build((error, buffer) => {
-  //   if(error) throw error
-  //
-  //   console.log('PDF Finished...')
-  //
-  //   // callback(buffer.toString('base64'))
-  //   // callback()
-  // })
 }
 
+
+/**
+ * Validate heroku config
+ */
 function validateConfig() {
   if (!process.env.FROM_ADDRESS) {
     throw Error('No From address specified in config')
