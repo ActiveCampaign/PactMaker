@@ -84,11 +84,15 @@ function sendEmails(data) {
 function createDocument(body, callback) {
   const htmlToPDF = new HTMLToPDF({ inputBody: body })
 
+  callback()
+
   htmlToPDF.build((error, buffer) => {
     if(error) throw error
 
+    console.log('PDF Finished...')
+
     // callback(buffer.toString('base64'))
-    callback()
+    // callback()
   })
 }
 
