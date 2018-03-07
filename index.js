@@ -30,19 +30,15 @@ app.get('/', (req, res) => {
   res.render('index', viewData)
 })
 
-app.get('/test', (req, res) => {
-  res.render('test', viewData)
-})
-
 app.post('/sign', (req, res) => {
   var template = ejs.compile(agreement)
   req.body.date = Date.now()
 
-  createDocument(template(req.body), (pdfAgreement) => {
+  createDocument(template(req.body), () => {
     res.render('success', _.merge(viewData, req.body))
-    
-    req.body.agreement = pdfAgreement
-    sendEmails(req.body)
+
+    // req.body.agreement = pdfAgreement
+    // sendEmails(req.body)
   })
 })
 
@@ -91,7 +87,8 @@ function createDocument(body, callback) {
   htmlToPDF.build((error, buffer) => {
     if(error) throw error
 
-    callback(buffer.toString('base64'))
+    // callback(buffer.toString('base64'))
+    callback()
   })
 }
 
