@@ -1,8 +1,4 @@
-if (!process.env.HEROKU) {
-  console.log('ahoy')
-  // Only load dot env if it's not running on heroku
-  require('dotenv').config()
-}
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
