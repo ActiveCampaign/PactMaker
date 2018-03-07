@@ -1,0 +1,39 @@
+{
+  "name": "PactMaker",
+  "description": "Starter workflow for creating self-signed PDF agreements with node.js and express",
+  "scripts": {
+  },
+  "env": {
+    "FROM_ADDRESS": {
+      "description": "The email address to send your emails From in Postmark.",
+      "required": true
+    },
+    "POSTMARK_SERVER_TOKEN": {
+      "description": "Server tokens can be found on the credentials tab on your Postmark server.",
+      "required": true,
+      "generator": "secret"
+    },
+    "INTERNAL_EMAIL_RECIPIENTS": {
+      "description": "Comma separated list of email address to send PDF agreement.",
+    },
+    "INTERNAL_EMAIL_SUBJECT": {
+    },
+    "SIGNEE_EMAIL_SUBJECT": {
+      "description": "Your signed agreement for <%= company %>"
+    },
+    "TITLE": {
+      "description": "Name of your company or app. This will appear in the header and footer.",
+      "value": "PactMaker"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
