@@ -8,7 +8,6 @@ const ejs = require('ejs')
 const _ = require('lodash')
 
 const agreement = fs.readFileSync(`${__dirname}/views/agreement.ejs`, 'utf8')
-console.log(agreement)
 const emailContentInternal = ejs.compile(fs.readFileSync(`${__dirname}/emails/internal.ejs`, 'utf8'))
 const emailContentSignee = ejs.compile(fs.readFileSync(`${__dirname}/emails/signee.ejs`, 'utf8'))
 
@@ -31,13 +30,18 @@ app.get('/', (req, res) => {
   res.render('index', viewData)
 })
 
+app.get('/test', (req, res) => {
+  res.render('test', viewData)
+})
+
 app.post('/sign', (req, res) => {
   var template = ejs.compile(agreement)
   req.body.date = Date.now()
 
   createDocument(template(req.body), (pdfAgreement) => {
-    req.body.agreement = pdfAgreement
     res.render('success', _.merge(viewData, req.body))
+    
+    req.body.agreement = pdfAgreement
     sendEmails(req.body)
   })
 })
