@@ -21,7 +21,7 @@
       "value": ""
     },
     "INTERNAL_EMAIL_SUBJECT": "<%= company %> just signed the agreement",
-    "SIGNEE_EMAIL_SUBJECT": "Your signed agreement for <%= company %>",
+    "SIGNEE_EMAIL_SUBJECT": "Your signed agreement for <%= company %>"
   },
   "formation": {
     "web": {
