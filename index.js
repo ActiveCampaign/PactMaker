@@ -7,6 +7,7 @@ const pdf = require('html-pdf');
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const _ = require('lodash')
+const moment = require('moment')
 
 // Cache agreement template
 const agreement = fs.readFileSync(`${__dirname}/views/agreement.ejs`, 'utf8')
@@ -44,7 +45,7 @@ app.get('/', (req, res) => {
  */
 app.post('/sign', (req, res) => {
   var template = ejs.compile(agreement)
-  req.body.date = Date.now()
+  req.body.date = moment().format('MMMM Do, YYYY')
 
   createDocument(template(req.body), (pdfAgreement) => {
     req.body.agreement = pdfAgreement
