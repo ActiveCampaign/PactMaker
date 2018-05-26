@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const fs = require('fs')
-const pdf = require('html-pdf');
+const pdf = require('html-pdf')
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const _ = require('lodash')
@@ -17,6 +17,7 @@ const emailContentInternal = ejs.compile(fs.readFileSync(`${__dirname}/emails/in
 const emailContentSignee = ejs.compile(fs.readFileSync(`${__dirname}/emails/signee.ejs`, 'utf8'))
 const signeeSubject = ejs.compile(process.env.SIGNEE_EMAIL_SUBJECT || '')
 const internalSubject = ejs.compile(process.env.INTERNAL_EMAIL_SUBJECT || '')
+const examples = JSON.parse(fs.readFileSync(`${__dirname}/examples.json`, 'utf8'))
 
 validateConfig()
 
@@ -28,7 +29,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 const viewData = {
-  title: process.env.TITLE || ''
+  title: process.env.TITLE || '',
+  exampleData: examples
 }
 
 
@@ -44,7 +46,7 @@ app.get('/', (req, res) => {
  * Sign document express route
  */
 app.post('/sign', (req, res) => {
-  var template = ejs.compile(agreement)
+  const template = ejs.compile(agreement)
   req.body.date = moment().format('MMMM Do, YYYY')
 
   createDocument(template(req.body), (pdfAgreement) => {
@@ -52,6 +54,21 @@ app.post('/sign', (req, res) => {
     res.render('success', _.merge(viewData, req.body))
 
     sendEmails(req.body)
+  })
+})
+
+
+/**
+ * Generate example agreement
+ */
+app.get('/example.pdf', (req, res) => {
+  const template = ejs.compile(agreement)
+  const data = viewData.exampleData
+  data.date = moment().format('MMMM Do, YYYY')
+
+  createDocument(template(data), (pdf) => {
+    res.contentType("application/pdf");
+    res.end(pdf, 'base64');
   })
 })
 
@@ -121,7 +138,13 @@ function sendEmails(data) {
  * @param  {Function} callback Callback containing the encoded PDF buffer
  */
 function createDocument(content, callback) {
-  pdf.create(content).toBuffer((err, buffer) => {
+
+  /* https://www.npmjs.com/package/html-pdf for more PDF options */
+  const options = {
+    border: '1in'
+  }
+
+  pdf.create(content, options).toBuffer((err, buffer) => {
     callback(buffer.toString('base64'))
   })
 }

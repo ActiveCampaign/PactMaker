@@ -6,6 +6,8 @@
 <body>
   <%- include('partials/masthead') %>
   <div class="container">
+    <p class="intro">Fill out this form to sign the example agreement. PactMaker automatically generates an example agreement <a href="/example.pdf" target="_blank">here</a>.</p>
+
     <form action="/sign" method="POST">
       <div class="form-row">
         <div class="form-label">
@@ -18,7 +20,7 @@
                  class="c-input"
                  size="40"
                  maxlength="100"
-                 placeholder="Saws & Sabers Co."
+                 placeholder="<%= exampleData.company %>"
                  oninvalid="this.setCustomValidity('Please enter your company name.')"
                  oninput="setCustomValidity('')"
                  required>
@@ -36,7 +38,7 @@
                  class="c-input"
                  size="40"
                  maxlength="100"
-                 placeholder="CEO"
+                 placeholder="<%= exampleData.role %>"
                  oninvalid="this.setCustomValidity('Please enter your name.')"
                  oninput="setCustomValidity('')"
                  required>
@@ -312,7 +314,7 @@
                  class="c-input"
                  size="40"
                  maxlength="100"
-                 placeholder="Sally Smith"
+                 placeholder="<%= exampleData.name %>"
                  oninvalid="this.setCustomValidity('Please enter your name.')"
                  oninput="setCustomValidity('')"
                  required>
@@ -329,11 +331,12 @@
                  name="email"
                  class="c-input"
                  size="40"
-                 placeholder="sarah@sawsnscissors.co"
+                 placeholder="<%= exampleData.email %>"
                  oninvalid="this.setCustomValidity('Please enter a valid email address.')"
                  oninput="setCustomValidity('')"
                  required>
         </div>
+        <p class="form-comment">PactMaker sends out a copy of the agreement, so be sure to use a real email address.</p>
       </div>
 
       <div class="form-row">

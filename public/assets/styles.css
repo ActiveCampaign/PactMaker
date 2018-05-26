@@ -49,6 +49,10 @@ footer {
 .form-field {
   position: relative;
 }
+.form-comment {
+  color: #999;
+  font-size: 14px;
+}
 .c-select {
   width: 100%;
   font-size: 16px;
@@ -111,4 +115,8 @@ footer {
   font-size: 20px;
   line-height: .7;
   text-align: center;
+}
+
+.intro {
+  margin: 0 0 2em;
 }
