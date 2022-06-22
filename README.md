@@ -4,7 +4,7 @@
   <br>
 </h1>
 
->Starter workflow for creating self-signed PDF agreements. [Check out the demo](https://pactmaker.herokuapp.com). If you’re working on becoming GDPR compliant, we wrote a [quick guide](https://postmarkapp.com/blog/gdpr-get-ready) on how you can get prepared.
+>Starter workflow for creating self-signed PDF agreements. If you’re working on becoming GDPR compliant, we wrote a [quick guide](https://postmarkapp.com/blog/gdpr-get-ready) on how you can get prepared.
 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
